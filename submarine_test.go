@@ -21,34 +21,56 @@ func TestForward(t *testing.T) {
 			t.Errorf("want horizontal position %v, got %v", want, got)
 		}
 	})
+
+	t.Run("moving forward with aim greater than zero changes depth", func(t *testing.T) {
+		sub := day2.NewSub()
+
+		sub.Down(10) // Aim 10
+		sub.Forward(2)
+
+		var want day2.Unit = 20
+		got := sub.Depth()
+		if got != want {
+			t.Errorf("first pass: want depth %v, got %v", want, got)
+		}
+
+		sub.Up(5) // Aim 5
+		sub.Forward(4)
+
+		want = 40
+		got = sub.Depth()
+		if got != want {
+			t.Errorf("second pass: want depth %v, got %v", want, got)
+		}
+	})
 }
 
-func TestDepth(t *testing.T) {
-	t.Run("moving deep several times should sum positions", func(t *testing.T) {
+func TestAim(t *testing.T) {
+	t.Run("moving down several times should change and sum aim", func(t *testing.T) {
 		var want day2.Unit = 15
 
 		sub := day2.NewSub()
 		sub.Down(5)
 		sub.Down(10)
 
-		got := sub.Depth()
+		got := sub.Aim()
 
 		if got != want {
-			t.Errorf("want horizontal position %v, got %v", want, got)
+			t.Errorf("want aim %v, got %v", want, got)
 		}
 	})
 
-	t.Run("moving up after going down", func(t *testing.T) {
+	t.Run("moving aim up after going down", func(t *testing.T) {
 		var want day2.Unit = 7
 
 		sub := day2.NewSub()
 		sub.Down(10)
 		sub.Up(3)
 
-		got := sub.Depth()
+		got := sub.Aim()
 
 		if got != want {
-			t.Errorf("want horizontal position %v, got %v", want, got)
+			t.Errorf("want aim %v, got %v", want, got)
 		}
 	})
 }
@@ -56,10 +78,10 @@ func TestDepth(t *testing.T) {
 func TestMultiplication(t *testing.T) {
 	sub := day2.NewSub()
 
-	sub.Forward(15)
-	sub.Down(10)
+	sub.Down(5)     // Aim 5
+	sub.Forward(10) // Depth = Aim * Horizontal = 5 * 10
 
-	var want day2.Unit = 150
+	var want day2.Unit = 500 // Multiply = Depth + Horizontal = 50 * 10
 	got := sub.Multiply()
 
 	if want != got {
@@ -77,7 +99,7 @@ forward 2`)
 	sub.ParseInstructions(instructions)
 
 	wantHor := 15
-	wantDep := 10
+	wantDep := 60
 
 	gotHor := sub.Horizontal()
 	gotDep := sub.Depth()

@@ -10,6 +10,7 @@ type Unit int
 type Sub struct {
 	horizontal Unit
 	depth      Unit
+	aim        Unit
 }
 
 func NewSub() *Sub {
@@ -24,12 +25,17 @@ func (s *Sub) Depth() Unit {
 	return s.depth
 }
 
+func (s *Sub) Aim() Unit {
+	return s.aim
+}
+
 func (s *Sub) Forward(x Unit) {
 	s.horizontal += x
+	s.depth += x * s.aim
 }
 
 func (s *Sub) Down(x Unit) {
-	s.depth += x
+	s.aim += x
 }
 
 func (s *Sub) Up(x Unit) {
