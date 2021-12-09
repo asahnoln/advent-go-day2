@@ -1,0 +1,16 @@
+#+TITLE: Readme
+
+* Advent of Code, day 2
+Read more about the task here: https://adventofcode.com/2021/day/2
+
+** How to use it
+~cmd~ directory contains main package. It uses ~STDIN~ for command parsing.
+
+*** Example
+#+begin_src fish
+go run ./cmd < path_to_your_input_file
+#+end_src
+
+#+begin_src fish
+echo "down 3"\n"forward 5" | go run ./cmd
+#+end_src
