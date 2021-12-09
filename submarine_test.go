@@ -9,7 +9,7 @@ import (
 
 func TestForward(t *testing.T) {
 	t.Run("moving forward several times should sum positions", func(t *testing.T) {
-		var want day2.Unit = day2.Unit(10)
+		var want day2.Unit = 10
 
 		sub := day2.NewSub()
 		sub.Forward(3)
